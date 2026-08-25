@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nextflow-runner
+  namespace: nextflow-tests
+spec:
+  restartPolicy: Never
+  containers:
+    - name: nextflow
+      image: eclipse-temurin:17-jre
+      command: ["sleep", "3600"]
+      workingDir: /workspace
+      volumeMounts:
+        - name: workdir
+          mountPath: /workspace
+  volumes:
+    - name: workdir
+      persistentVolumeClaim:
+        claimName: nextflow-workdir
